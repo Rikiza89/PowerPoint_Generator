@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG PowerPoint Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            background: #f7f7ff;
+            border-color: #764ba2;
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            margin-left: 10px;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .preview {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .preview.show {
+            display: block;
+        }
+        
+        .preview h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .slide-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .slide-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .slide-points {
+            padding-left: 20px;
+        }
+        
+        .slide-points li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .confirmation {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .confirmation.show {
+            display: block;
+        }
+        
+        .confirmation-question {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .file-list {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .file-item {
+            padding: 5px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 RAG PowerPoint Generator</h1>
+            <p class="tagline">Upload documents, describe your presentation, and let AI create it for you</p>
+        </header>
+        
+        <div class="content">
+            <!-- Messages -->
+            <div id="messageArea"></div>
+            
+            <!-- Step 1: Upload Documents -->
+            <div class="section">
+                <h2 class="section-title">📁 Step 1: Upload Documents</h2>
+                <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📄</div>
+                    <p>Click to upload documents (PDF, DOCX, TXT)</p>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 5px;">Multiple files supported</p>
+                    <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt">
+                </div>
+                <div id="fileList" class="file-list" style="display:none;"></div>
+                <button class="btn" id="uploadBtn" disabled>Upload Documents</button>
+            </div>
+            
+            <!-- Step 2: Describe Presentation -->
+            <div class="section">
+                <h2 class="section-title">✍️ Step 2: Describe Your Presentation</h2>
+                <textarea id="requestInput" rows="6" placeholder="Describe what you want in your presentation. For example:&#10;&#10;'Create a 10-slide presentation about climate change impacts on marine ecosystems, including current statistics, major threats, and potential solutions.'"></textarea>
+                <button class="btn" id="generateBtn">Generate Presentation Structure</button>
+            </div>
+            
+            <!-- Loading -->
+            <div class="loading" id="loadingArea">
+                <div class="spinner"></div>
+                <p>Generating presentation structure...</p>
+            </div>
+            
+            <!-- Preview -->
+            <div class="preview" id="previewArea"></div>
+            
+            <!-- Confirmation -->
+            <div class="confirmation" id="confirmationArea">
+                <p class="confirmation-question">Does this presentation structure meet your requirements?</p>
+                <button class="btn btn-success" id="confirmYes">✓ Yes, Generate PPTX</button>
+                <button class="btn btn-danger" id="confirmNo">✗ No, Let me revise</button>
+            </div>
+            
+            <!-- Feedback -->
+            <div class="section" id="feedbackSection" style="display:none;">
+                <h2 class="section-title">📝 Provide Feedback</h2>
+                <textarea id="feedbackInput" rows="4" placeholder="What would you like to change? Be specific about what you want to add, remove, or modify."></textarea>
+                <button class="btn" id="submitFeedbackBtn">Submit Feedback & Regenerate</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedFiles = null;
+        let currentSessionId = null;
+        let currentStructure = null;
+        
+        // File selection
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            selectedFiles = e.target.files;
+            const fileList = document.getElementById('fileList');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            if (selectedFiles.length > 0) {
+                let html = '<strong>Selected files:</strong><br>';
+                for (let file of selectedFiles) {
+                    html += `<div class="file-item">• ${file.name}</div>`;
+                }
+                fileList.innerHTML = html;
+                fileList.style.display = 'block';
+                uploadBtn.disabled = false;
+            }
+        });
+        
+        // Upload documents
+        document.getElementById('uploadBtn').addEventListener('click', async function() {
+            if (!selectedFiles || selectedFiles.length === 0) return;
+            
+            const formData = new FormData();
+            for (let file of selectedFiles) {
+                formData.append('files', file);
+            }
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                } else {
+                    showMessage(data.error || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Error uploading files: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        // Generate presentation
+        document.getElementById('generateBtn').addEventListener('click', async function() {
+            const request = document.getElementById('requestInput').value.trim();
+            
+            if (!request) {
+                showMessage('Please describe your presentation', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/generate_presentation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        request: request,
+                        session_id: currentSessionId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.structure) {
+                    currentSessionId = data.session_id;
+                    currentStructure = data.structure;
+                    displayPreview(data.structure, data.iteration);
+                    showConfirmation();
+                } else {
+                    showMessage(data.error || 'Generation failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Error generating presentation: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        // Confirm Yes
+        document.getElementById('confirmYes').addEventListener('click', async function() {
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/confirm_presentation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        confirmed: true,
+                        session_id: currentSessionId,
+                        structure: currentStructure
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Presentation generated! Downloading...', 'success');
+                    window.location.href = data.download_url;
+                    resetForm();
+                } else {
+                    showMessage(data.error || 'Generation failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Error generating presentation: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        // Confirm No
+        document.getElementById('confirmNo').addEventListener('click', function() {
+            document.getElementById('confirmationArea').classList.remove('show');
+            document.getElementById('feedbackSection').style.display = 'block';
+        });
+        
+        // Submit Feedback
+        document.getElementById('submitFeedbackBtn').addEventListener('click', async function() {
+            const feedback = document.getElementById('feedbackInput').value.trim();
+            
+            if (!feedback) {
+                showMessage('Please provide feedback', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/confirm_presentation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        confirmed: false,
+                        session_id: currentSessionId,
+                        structure: currentStructure,
+                        feedback: feedback
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Feedback recorded! Update your request above and click Generate again.', 'success');
+                    document.getElementById('feedbackSection').style.display = 'none';
+                    document.getElementById('feedbackInput').value = '';
+                    document.getElementById('previewArea').classList.remove('show');
+                } else {
+                    showMessage(data.error || 'Failed to record feedback', 'error');
+                }
+            } catch (error) {
+                showMessage('Error submitting feedback: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        function displayPreview(structure, iteration) {
+            const previewArea = document.getElementById('previewArea');
+            
+            let html = `<h3>Presentation Preview (Iteration ${iteration})</h3>`;
+            html += `<div class="slide-preview">
+                        <div class="slide-title">Title Slide</div>
+                        <p><strong>${structure.title}</strong></p>
+                        <p>${structure.subtitle}</p>
+                     </div>`;
+            
+            structure.slides.forEach((slide, index) => {
+                html += `<div class="slide-preview">
+                            <div class="slide-title">Slide ${index + 1}: ${slide.title}</div>
+                            <ul class="slide-points">`;
+                
+                slide.points.forEach(point => {
+                    html += `<li>${point}</li>`;
+                });
+                
+                html += `</ul></div>`;
+            });
+            
+            previewArea.innerHTML = html;
+            previewArea.classList.add('show');
+        }
+        
+        function showConfirmation() {
+            document.getElementById('confirmationArea').classList.add('show');
+        }
+        
+        function showMessage(message, type) {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="message ${type} show">${message}</div>`;
+            setTimeout(() => {
+                messageArea.innerHTML = '';
+            }, 5000);
+        }
+        
+        function showLoading(show) {
+            const loadingArea = document.getElementById('loadingArea');
+            if (show) {
+                loadingArea.classList.add('show');
+            } else {
+                loadingArea.classList.remove('show');
+            }
+        }
+        
+        function resetForm() {
+            currentSessionId = null;
+            currentStructure = null;
+            document.getElementById('previewArea').classList.remove('show');
+            document.getElementById('confirmationArea').classList.remove('show');
+            document.getElementById('feedbackSection').style.display = 'none';
+            document.getElementById('requestInput').value = '';
+            document.getElementById('feedbackInput').value = '';
+        }
+    </script>
+</body>
+</html>
