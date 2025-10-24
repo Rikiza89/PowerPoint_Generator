@@ -1,0 +1,8 @@
+
+Flask
+requests
+PyPDF2
+python-docx
+python-pptx
+chromadb
+Werkzeug
