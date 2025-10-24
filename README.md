@@ -1,32 +1,69 @@
-# RAG PowerPoint Generator - Setup Guide
+# 🎯 RAG PowerPoint Generator
 
-## Prerequisites
+A sophisticated Flask-based application that generates professional PowerPoint presentations using RAG (Retrieval-Augmented Generation) with Ollama AI and document context.
 
-1. **Python 3.8+** installed on your system
-2. **Ollama** installed and running with llama3.2:3b model
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-3.0.0-green.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## Installation Steps
+## ✨ Features
 
-### 1. Install Ollama and Model
+### 🤖 AI-Powered Generation
+- **RAG Integration**: Uses uploaded documents as context for accurate, relevant presentations
+- **Ollama LLM**: Powered by llama3.2:3b model for intelligent content generation
+- **Iterative Refinement**: Built-in feedback loop for continuous improvement
+
+### 🎨 Professional Design
+- **Multiple Color Schemes**: Corporate Blue, Modern Green, Elegant Purple
+- **Various Slide Types**: Bullet points, two-column, numbered lists, charts, and tables
+- **Advanced Layouts**: Professional styling with branded headers and consistent formatting
+- **Data Visualization**: Bar charts, column charts, line charts, and pie charts
+
+### 📊 Sophisticated Content
+- **Chart Generation**: Automatic creation of data visualizations
+- **Table Creation**: Styled tables with headers and alternating row colors
+- **Multiple Layouts**: Flexible content presentation options
+- **Professional Typography**: Calibri font with proper sizing and hierarchy
+
+### 🔄 User-Friendly Workflow
+1. Upload documents (PDF, DOCX, TXT)
+2. Describe your presentation requirements
+3. Review AI-generated structure
+4. Provide feedback or confirm
+5. Download professional PPTX file
+
+## 📋 Prerequisites
+
+- **Python 3.8 or higher**
+- **Ollama** installed and running
+- **llama3.2:3b** model downloaded
+
+## 🚀 Installation
+
+### 1. Install Ollama
+
+Visit [https://ollama.ai](https://ollama.ai) and follow installation instructions for your OS.
 
 ```bash
-# Install Ollama (visit https://ollama.ai for OS-specific instructions)
-
-# Pull the llama3.2:3b model
+# Pull the required model
 ollama pull llama3.2:3b
 
-# Verify it's running
+# Verify installation
 ollama run llama3.2:3b
 # Type "Hello" to test, then /bye to exit
 ```
 
-### 2. Set Up Python Environment
+### 2. Clone or Create Project
 
 ```bash
 # Create project directory
 mkdir rag-pptx-generator
 cd rag-pptx-generator
+```
 
+### 3. Set Up Python Environment
+
+```bash
 # Create virtual environment
 python -m venv venv
 
@@ -40,155 +77,144 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Project Structure
-
-Create the following folder structure:
+### 4. Create Project Structure
 
 ```
 rag-pptx-generator/
 │
 ├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
+├── README.md             # This file
+├── LICENSE               # MIT License
 ├── templates/
 │   └── index.html        # Web interface
-├── uploads/              # Uploaded documents (auto-created)
-└── outputs/              # Generated presentations (auto-created)
+├── uploads/              # Auto-created for uploaded documents
+└── outputs/              # Auto-created for generated presentations
 ```
 
-### 4. Create Files
+## 🎮 Usage
 
-1. Save the Flask application code as `app.py`
-2. Create a `templates` folder and save the HTML code as `templates/index.html`
-3. Save the requirements.txt file
-
-## Running the Application
-
-### 1. Start Ollama Service
-
-Make sure Ollama is running in the background:
+### Starting the Application
 
 ```bash
-# The Ollama service should be running automatically
-# If not, start it manually (OS-dependent)
-```
-
-### 2. Start Flask Application
-
-```bash
-# Make sure virtual environment is activated
+# Ensure virtual environment is activated
 python app.py
 ```
 
 The application will start on `http://127.0.0.1:5000`
 
-### 3. Access Web Interface
+### Web Interface Workflow
 
-Open your browser and navigate to:
-```
-http://127.0.0.1:5000
-```
+#### Step 1: Upload Documents
+1. Click the upload area
+2. Select PDF, DOCX, or TXT files
+3. Click "Upload Documents"
+4. Wait for processing confirmation
 
-## How to Use
-
-### Step 1: Upload Documents
-1. Click on the upload area
-2. Select one or more documents (PDF, DOCX, or TXT files)
-3. Click "Upload Documents" button
-4. Wait for confirmation message
-
-### Step 2: Describe Your Presentation
-1. In the text area, describe what you want in your presentation
-2. Be specific about:
-   - Topic
-   - Number of slides
-   - Key points to cover
-   - Any specific structure you want
-
-**Example requests:**
-```
-Create a 10-slide presentation about renewable energy sources, 
-including solar, wind, and hydroelectric power. Include statistics 
-and future trends.
-```
+#### Step 2: Describe Your Presentation
+Write a detailed description of what you want:
 
 ```
-Make a 5-slide presentation summarizing the key findings from 
-the uploaded research papers about machine learning in healthcare.
+Create a 10-slide presentation about renewable energy. Include:
+- Overview of solar, wind, and hydroelectric power
+- Current statistics and market trends
+- Environmental impact comparison
+- Future projections with charts
+- Case studies in table format
 ```
 
-### Step 3: Review Generated Structure
-1. Click "Generate Presentation Structure"
-2. Wait for the AI to generate the structure
-3. Review the preview showing all slides and content
+#### Step 3: Review Generated Structure
+- Preview all slides and content
+- Check layout types and data visualizations
+- Review chart data and table structures
 
-### Step 4: Confirm or Revise
-1. If satisfied, click "✓ Yes, Generate PPTX"
-   - The PowerPoint file will be generated and downloaded automatically
-   
-2. If not satisfied, click "✗ No, Let me revise"
-   - Provide specific feedback about what to change
-   - Click "Submit Feedback & Regenerate"
-   - Update your request in Step 2 if needed
-   - Click "Generate Presentation Structure" again
-   - The AI will use your previous feedback to improve
+#### Step 4: Confirm or Refine
+- **Option A**: Click "✓ Yes, Generate PPTX" to create the presentation
+- **Option B**: Click "✗ No, Let me revise" to provide feedback
 
-### Iterative Refinement Process
+#### Step 5: Iterative Improvement (if needed)
+1. Provide specific feedback about changes
+2. Click "Submit Feedback & Regenerate"
+3. Update your original request if needed
+4. Click "Generate Presentation Structure" again
+5. AI incorporates previous feedback for better results
 
-The application supports multiple iterations:
-1. Generate initial structure
-2. Review and provide feedback
-3. Generate improved structure (AI learns from previous attempts)
-4. Repeat until satisfied
-5. Generate final PPTX file
+#### Step 6: Download
+Once confirmed, your professional PPTX file downloads automatically!
 
-## Features
+## 🎨 Color Schemes
 
-### RAG (Retrieval-Augmented Generation)
-- Uploads documents are processed and chunked
-- Relevant content is retrieved based on your request
-- AI uses this context to generate accurate presentations
+Choose from three professional themes:
 
-### Document Support
-- **PDF**: Research papers, reports, books
-- **DOCX**: Word documents, essays
-- **TXT**: Plain text files, notes
+### Corporate Blue
+- Primary: Dark Blue (#003366)
+- Secondary: Blue (#0066CC)
+- Accent: Orange (#FF9900)
+- Perfect for business and corporate presentations
 
-### Iterative Refinement
-- Multiple generation attempts
-- AI remembers previous structures and feedback
-- Continuous improvement until you're satisfied
+### Modern Green
+- Primary: Forest Green (#228B22)
+- Secondary: Lime Green (#32CD32)
+- Accent: Gold (#FFD700)
+- Ideal for environmental and sustainability topics
 
-### Session Management
-- Each generation session is tracked
-- Previous attempts inform new generations
-- Feedback history is maintained
+### Elegant Purple
+- Primary: Indigo (#4B0082)
+- Secondary: Medium Purple (#9370DB)
+- Accent: Pink (#FFC0CB)
+- Great for creative and innovative presentations
 
-## Configuration
+## 📊 Slide Types
 
-### Changing Ollama Model
+### Bullet Slides
+Traditional point-based content with professional bullets
 
-In `app.py`, modify:
+### Two-Column Slides
+Side-by-side content for comparisons or parallel information
+
+### Numbered Slides
+Sequential steps or prioritized information
+
+### Chart Slides
+Data visualizations including:
+- **Bar Charts**: Horizontal comparisons
+- **Column Charts**: Vertical comparisons
+- **Line Charts**: Trends over time
+- **Pie Charts**: Proportions and percentages
+
+### Table Slides
+Structured data with:
+- Styled headers
+- Alternating row colors
+- Professional formatting
+
+## ⚙️ Configuration
+
+### Change Ollama Model
+
+Edit `app.py`:
 ```python
 MODEL_NAME = "llama3.2:3b"  # Change to any Ollama model
 ```
 
-Available models:
+Available alternatives:
 - `llama3.2:1b` - Faster, less accurate
-- `llama3.2:3b` - Balanced (recommended)
 - `llama3.1:8b` - More accurate, slower
+- `mistral:7b` - Alternative model
 
-### Adjusting Chunk Size
+### Adjust Document Processing
 
-For document processing:
 ```python
+# In chunk_text() function
 def chunk_text(text, chunk_size=500, overlap=50):
     # Increase chunk_size for longer contexts
     # Increase overlap for better continuity
 ```
 
-### Changing Number of Retrieved Chunks
+### Modify Retrieved Context
 
 ```python
+# In generate_presentation() function
 results = collection.query(
     query_texts=[user_request],
     n_results=5  # Increase for more context
@@ -197,23 +223,20 @@ results = collection.query(
 
 ### Temperature Control
 
-For creativity vs accuracy:
 ```python
+# In query_ollama() function
 payload = {
-    "model": MODEL_NAME,
-    "prompt": full_prompt,
-    "stream": False,
-    "temperature": 0.7  # Lower = more focused, Higher = more creative
+    "temperature": 0.7  # Lower = focused, Higher = creative
 }
 ```
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Ollama Connection Error
 ```
 Error: Connection refused to localhost:11434
 ```
-**Solution**: Make sure Ollama is running
+**Solution**: Start Ollama service
 ```bash
 ollama serve
 ```
@@ -228,157 +251,163 @@ ollama pull llama3.2:3b
 ```
 
 ### JSON Parsing Error
-If the AI returns malformed JSON, the application uses a fallback structure. To improve:
-- Make your request more specific
+The application uses a fallback structure if JSON parsing fails.
+**Solutions**:
+- Be more specific in your request
 - Try regenerating
 - Lower the temperature in configuration
 
 ### File Upload Issues
-- Maximum file size: 16MB
-- Supported formats: PDF, DOCX, TXT only
-- Check file permissions
+- **Maximum file size**: 16MB
+- **Supported formats**: PDF, DOCX, TXT only
+- **Check**: File permissions and disk space
 
 ### ChromaDB Errors
 ```bash
-# Reinstall ChromaDB if needed
 pip uninstall chromadb
 pip install chromadb==0.4.22
 ```
 
-## Tips for Best Results
+## 💡 Tips for Best Results
 
-### 1. Document Upload
-- Upload relevant documents before generating
-- More context = better presentations
+### Document Upload
+- Upload relevant, high-quality documents
+- More context leads to better presentations
 - Keep documents focused on your topic
 
-### 2. Request Writing
-- Be specific about number of slides
-- Mention key topics to cover
-- Specify any required structure
-- Include desired depth of content
+### Request Writing
+✅ **Good Example**:
+```
+Create a 12-slide presentation about climate change impacts on 
+agriculture. Include:
+- Introduction with statistics
+- Regional impact analysis in table format
+- Crop yield comparisons in bar charts
+- Adaptation strategies with case studies
+- Future projections with line charts
+```
 
-### 3. Feedback
-- Be specific in your feedback
-- Mention exact slides or points to change
-- Suggest improvements clearly
+❌ **Poor Example**:
+```
+Make a presentation about climate change
+```
+
+### Feedback
+- Be specific about what to change
+- Mention slide numbers or titles
+- Suggest concrete improvements
 - Don't hesitate to iterate multiple times
 
-### 4. Example Workflow
+## 📚 Example Workflow
+
 ```
-Upload: 3 research papers on climate change
+1. Upload: 3 research papers on artificial intelligence
 
-Request: "Create an 8-slide presentation about climate change 
-impacts on agriculture. Include current data, regional effects, 
-and adaptation strategies."
+2. Request: "Create a 15-slide presentation about AI in healthcare. 
+   Include current applications, benefits analysis in a table, 
+   adoption rates chart, challenges, and future trends."
 
-Review: Structure looks good but needs more data
+3. Review: Structure looks good but needs more specific data
 
-Feedback: "Add specific statistics to slides 3 and 4, and 
-include a case study slide about drought-resistant crops"
+4. Feedback: "Add specific statistics to slides 4-6, include a 
+   comparison chart of AI vs traditional methods, and add a case 
+   study table about successful implementations"
 
-Regenerate: Now includes requested improvements
+5. Regenerate: AI incorporates feedback with improved content
 
-Confirm: Generate final PPTX
-```
-
-## Advanced Usage
-
-### Custom Prompt Engineering
-
-Modify the prompt in `app.py` for different styles:
-
-```python
-prompt = f"""Based on the following context, create a PROFESSIONAL 
-and DETAILED PowerPoint presentation structure.
-
-Use BULLET POINTS for clarity.
-Include ACTIONABLE insights.
-Add relevant STATISTICS when available.
-
-Context: {context}
-Request: {user_request}
-
-[Rest of prompt...]
-"""
+6. Confirm: Generate final professional PPTX
 ```
 
-### Styling Presentations
+## 🚀 Production Deployment
 
-Modify `create_presentation()` function:
-
-```python
-from pptx.util import Pt
-from pptx.enum.text import PP_ALIGN
-
-# Add styling to text
-for paragraph in text_frame.paragraphs:
-    paragraph.font.size = Pt(18)
-    paragraph.font.name = 'Arial'
-    paragraph.alignment = PP_ALIGN.LEFT
-```
-
-### Adding Images
-
-```python
-# In create_presentation()
-from pptx.util import Inches
-
-# Add image to slide
-slide.shapes.add_picture('image.jpg', 
-                        Inches(1), Inches(2), 
-                        width=Inches(4))
-```
-
-## Security Considerations
-
-- Files are stored temporarily in `uploads/` folder
-- Consider adding file validation
-- Implement user authentication for production
-- Add rate limiting for API calls
-- Sanitize file names and inputs
-
-## Production Deployment
-
-For production use:
-
-1. **Use a production WSGI server**:
+### Use Production WSGI Server
 ```bash
 pip install gunicorn
-gunicorn -w 4 app:app
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
 ```
 
-2. **Add environment variables**:
+### Environment Variables
 ```python
 import os
 OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://localhost:11434/api/generate')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key')
 ```
 
-3. **Implement proper logging**:
+### Add Logging
 ```python
 import logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 ```
 
-4. **Add file cleanup**:
+### File Cleanup
+Implement scheduled cleanup for old files:
 ```python
 import schedule
+import time
+
 def cleanup_old_files():
     # Remove files older than 24 hours
     pass
+
+schedule.every(1).hours.do(cleanup_old_files)
 ```
 
-## Support and Resources
+## 🤝 Contributing
 
-- **Ollama Documentation**: https://ollama.ai/docs
-- **Flask Documentation**: https://flask.palletsprojects.com/
-- **Python-PPTX Documentation**: https://python-pptx.readthedocs.io/
-- **ChromaDB Documentation**: https://docs.trychroma.com/
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This is a demonstration project. Modify and use as needed for your purposes.
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Ollama** - For providing the LLM infrastructure
+- **Flask** - Web framework
+- **python-pptx** - PowerPoint generation library
+- **ChromaDB** - Vector database for RAG
+- **Meta** - Llama 3.2 model
+
+## 📧 Support
+
+For issues, questions, or suggestions:
+- Open an issue on GitHub
+- Check existing documentation
+- Review troubleshooting section
+
+## 🔗 Resources
+
+- [Ollama Documentation](https://ollama.ai/docs)
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [python-pptx Documentation](https://python-pptx.readthedocs.io/)
+- [ChromaDB Documentation](https://docs.trychroma.com/)
+
+## 📊 Project Status
+
+**Current Version**: 1.0.0
+
+**Status**: Active Development
+
+**Features in Development**:
+- [ ] Image insertion in slides
+- [ ] Custom template support
+- [ ] Animation effects
+- [ ] Video embedding
+- [ ] Cloud storage integration
+- [ ] Multi-user support
+- [ ] API endpoints
 
 ---
 
-**Happy Presentation Generating! 🎯**
+**Made with ❤️ using Python, Flask, and AI**
+
+**Star ⭐ this repository if you find it helpful!**
